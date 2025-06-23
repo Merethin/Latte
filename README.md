@@ -17,7 +17,7 @@ Many features are unfinished or straight up not implemented at all. Completely e
 Latte is an all-in-one keybind script for NationStates tag raiding, inspired by the likes of Feather, Railgun and Reliant.
 
 - Single-tap keybinds for most NationStates site actions relevant to tagging (mostly implemented)
-- WA application storage in a "quiver" (not started)
+- WA application storage in a "quiver" (implemented)
 - Latte "plugins" to import WA applications from places like GMail into Latte's quiver (not started)
 - Simple keybinds for fast switcher prepping, similar to Reliant (implemented)
 - Simple keybinds for fast tagging of hit regions, similar to Henson (not started)
@@ -31,7 +31,7 @@ These are only the defaults, based on Feather keybinds.
 - Update Auth (default: J) - update the chk and localid values needed to make requests (implemented). if certain actions aren't working for no reason, you probably need to do this.
 - Endorse (default: S) - endorse a nation (implemented).
 - Unendorse (default: L) - withdraw endorsement from a nation (implemented).
-- Join WA (default: R) - confirm WA application from either the join_WA page (implemented) or Latte's internal WA application storage, aka "quiver" (not implemented), and copy the nation link to clipboard (implemented).
+- Join WA (default: R) - confirm WA application from either the join_WA page (implemented) or Latte's internal WA application storage, aka "quiver" (implemented), and copy the nation link to clipboard (implemented).
 - Move (default: F) - move to the current region (implemented).
 - Move to Jump Point (default: B) - move to the jump point (implemented), which can be configured in the Settings page above.
 - Apply to WA (default: H) - apply to join the world assembly (implemented).

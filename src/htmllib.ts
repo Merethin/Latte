@@ -4,6 +4,12 @@ export function createElementsFromHTML(htmlString: string) {
     return div.childNodes;
 }
 
+export function createTableElementsFromHTML(htmlString: string) {
+    var tbody = document.createElement('tbody');
+    tbody.innerHTML = htmlString.trim();
+    return tbody.childNodes;
+}
+
 export function toggleSwitcherListDisplay() {
     let switcherList = document.getElementById("swlist") as HTMLElement;
     let switcherToggle = document.getElementById("showswlist") as HTMLButtonElement;

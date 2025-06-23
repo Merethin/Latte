@@ -2,7 +2,7 @@
 import Mousetrap from 'mousetrap';
 import { NSScript, addSidebarButton } from '../nsdotjs/src/nsdotjs';
 import { keybinds, loadKeybind } from './keybinds';
-import { checkPage, checkPageRegex } from './lib';
+import { checkPage, checkPageRegex, loadQuiver, saveQuiver } from './lib';
 import { injectUAWarning } from './htmllib';
 import { setupMainPage } from './mainPage';
 import { setupSettingsPage } from './settings';
@@ -117,23 +117,37 @@ const AUTHOR = "Merethin";
         Mousetrap.bind(loadKeybind(keybinds.joinwa), (_) => {
             if(script.isHtmlRequestInProgress) return;
 
+            var nation: string | null = null;
+            var appid: string | null = null;
+            var quiver: Record<string, string> | null = null;
+
             if(checkPage("page=join_WA")) {
-                let nation = checkPageRegex(/nation=([a-z0-9_\-]+)/);
-                let appid = checkPageRegex(/appid=([0-9]+)/);
-                if(nation != null && appid != null) {
-                    if(!script.isHtmlRequestInProgress) {
-                        GM_setClipboard(`https://fast.nationstates.net/nation=${nation}/template-overall=none`, "text");
-                        (async () => {
-                            let success = await script.joinWorldAssembly(nation, appid);
-                            if(success) {
-                                await script.set("lastNationSeen", nation);
-                                lastNationSeen = nation;
-                            }
-                        })();
-                    }
-                }
+                nation = checkPageRegex(/nation=([a-z0-9_\-]+)/);
+                appid = checkPageRegex(/appid=([0-9]+)/);
             } else {
-                // TODO: Load from quiver
+                quiver = loadQuiver();
+                if(Object.keys(quiver).length > 0) {
+                    [nation, appid] = Object.entries(quiver)[0];
+                } else {
+                    script.statusBubble.warn("No WA applications left in quiver");
+                    return;
+                }
+            }
+
+            if(nation != null && appid != null) {
+                GM_setClipboard(`https://fast.nationstates.net/nation=${nation}/template-overall=none`, "text");
+                (async () => {
+                    let success = await script.joinWorldAssembly(nation, appid);
+                    if(success) {
+                        await script.set("lastNationSeen", nation);
+                        lastNationSeen = nation;
+
+                        if(quiver) {
+                            delete quiver[nation];
+                            saveQuiver(quiver);
+                        }
+                    }
+                })();
             }
         });
 

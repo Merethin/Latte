@@ -20,3 +20,17 @@ export function loadSwitchers(): Array<string> {
     }
     return switchers;
 }
+
+export function loadQuiver(): Record<string, string> {
+    var quiver: Record<string, string> = {};
+    let quiverJSON: string | null = GM_getValue("quiver");
+    if(quiverJSON != null) {
+        quiver = JSON.parse(quiverJSON);
+    }
+    return quiver;
+}
+
+export function saveQuiver(quiver: Record<string, string>): void {
+    let quiverJSON: string = JSON.stringify(quiver);
+    GM_setValue("quiver", quiverJSON);
+}
