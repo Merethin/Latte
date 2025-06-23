@@ -1,4 +1,5 @@
-import { normalize, createElementsFromHTML, toggleSwitcherListDisplay } from './lib';
+import { normalize } from './lib';
+import { createElementsFromHTML, toggleSwitcherListDisplay } from './htmllib';
 import { setKeybind, getKeybind, keybinds, Keybind } from './keybinds';
 
 const settingsPageHTML = 

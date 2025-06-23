@@ -1,6 +1,6 @@
 import { ApplyToWorldAssemblyFormData, NSScript } from "../nsdotjs/src/nsdotjs";
 import { keybinds, loadKeybind } from "./keybinds";
-import { injectWarning, toggleSwitcherListDisplay, createElementsFromHTML } from "./lib";
+import { injectWarning, toggleSwitcherListDisplay, createElementsFromHTML } from "./htmllib";
 import Mousetrap from "mousetrap";
 
 const prepPageHTML = 

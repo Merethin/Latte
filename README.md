@@ -36,8 +36,8 @@ These are only the defaults, based on Feather keybinds.
 - Move to Jump Point (default: B) - move to the jump point (implemented), which can be configured in the Settings page above.
 - Apply to WA (default: H) - apply to join the world assembly (implemented).
 - Resign from WA (default: E) - resign from the world assembly (implemented).
-- Show current region (default: Z) - load the current region page (not implemented).
-- Copy current nation (default: X) - copy the current nation link to clipboard (implemented).
+- Show Current Region (default: Z) - load the current region page (implemented).
+- Copy Current Nation (default: X) - copy the current nation link to clipboard (implemented).
 - Appoint/Dismiss RO (default: D) - appoint yourself as RO (implemented), rename governor (not implemented), dismiss other ROs (not implemented).
 - Prep (default: P) - take you to the prep page if not there (implemented), perform prepping actions (implemented).
 - Tag (default: T) - take you to the tag page if not there (implemented), perform tag actions (not implemented).

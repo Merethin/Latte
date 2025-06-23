@@ -1,18 +1,27 @@
-import { keybinds, loadKeybind } from './keybinds';
+// third-party imports first, then latte stuff
 import Mousetrap from 'mousetrap';
 import { NSScript, addSidebarButton } from '../nsdotjs/src/nsdotjs';
-import { checkPage, checkPageRegex, injectUAWarning } from './lib';
-import { VERSION } from '../build/version';
+import { keybinds, loadKeybind } from './keybinds';
+import { checkPage, checkPageRegex } from './lib';
+import { injectUAWarning } from './htmllib';
 import { setupMainPage } from './mainPage';
 import { setupSettingsPage } from './settings';
 import { setupPrepPage, prep } from './prep';
 import { setupQuiverPage } from './quiver';
 import { setupTagPage } from './tag';
 import { setupImportPage } from './import';
+import { VERSION } from '../build/version';
 
+const NAME = "Latte";
+const AUTHOR = "Merethin";
+
+// called on every page load
 (async function() {
     'use strict';
 
+    // fixme: this currently only works on Rift
+    // nsdotjs limitation but it means that getting to the 
+    // Latte main page on any other theme is tricky
     addSidebarButton(
         "Latte",
         "shield",
@@ -20,6 +29,7 @@ import { setupImportPage } from './import';
         "/page=blank/latte=main",
     );
 
+    // inject Latte content pages if necessary
     if(checkPage("page=blank/latte=main")) {
         setupMainPage();
     } else if (checkPage("page=blank/latte=settings")) {
@@ -43,8 +53,10 @@ import { setupImportPage } from './import';
             injectUAWarning();
         }     
     } else {
-        let script = new NSScript("Latte", VERSION, "Merethin", userAgent, async () => {});
+        // Only load the NSScript and keybinds if we have a user agent
+        let script = new NSScript(NAME, VERSION, AUTHOR, userAgent, async () => {});
 
+        // load status bubble config and hide it if needed
         let showStatusBubble = GM_getValue("showStatusBubble", 1);
         if(showStatusBubble) {
             script.statusBubble.show();
@@ -52,6 +64,8 @@ import { setupImportPage } from './import';
             script.statusBubble.hide();
         }
 
+        // Fetch the current nation link from the page to reuse when we're in
+        // template-overall=none - automatically changed when logging in or joining WA
         // Not using GM_setValue for this so that it's not stored across containers
         const links: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(".bellink");
         if (links.length > 0) { 
@@ -59,6 +73,15 @@ import { setupImportPage } from './import';
             await script.set("lastNationSeen", lastNationSeen);
         } else { 
             var lastNationSeen = await script.get("lastNationSeen") as string | null;
+        }
+
+        // ditto for region - automatically updated when moving
+        const regionbar = document.getElementById("panelregionbar");
+        if (regionbar) { 
+            var lastRegionSeen: string | null = (regionbar.children[0] as HTMLAnchorElement).href.split("=")[1];
+            await script.set("lastRegionSeen", lastRegionSeen);
+        } else { 
+            var lastRegionSeen = await script.get("lastRegionSeen") as string | null;
         }
 
         Mousetrap.bind(loadKeybind(keybinds.refresh), (_) => {
@@ -91,45 +114,6 @@ import { setupImportPage } from './import';
             }
         });
 
-        Mousetrap.bind(loadKeybind(keybinds.move), (_) => {
-            if(script.isHtmlRequestInProgress) return;
-
-            let region = checkPageRegex(/region=([a-z0-9_\-]+)/);
-            if(region != null) {
-                script.moveToRegion(region);
-            }
-        });
-
-        Mousetrap.bind(loadKeybind(keybinds.jpmove), (_) => {
-            if(script.isHtmlRequestInProgress) return;
-
-            let region: string | null = GM_getValue("jumpPoint");
-            if(region != null) {
-                script.moveToRegion(region);
-            }
-        });
-
-        Mousetrap.bind(loadKeybind(keybinds.resign), (_) => {
-            if(script.isHtmlRequestInProgress) return;
-
-            script.resignWorldAssembly();
-        });
-
-        Mousetrap.bind(loadKeybind(keybinds.apply), (_) => {
-            if(script.isHtmlRequestInProgress) return;
-
-            script.applyToWorldAssembly();
-        });
-
-        Mousetrap.bind(loadKeybind(keybinds.ro), (_) => {
-            if(script.isHtmlRequestInProgress) return;
-
-            let officename: string | null = GM_getValue("roName");
-            if(officename != null && lastNationSeen != null) {
-                script.editRegionalOfficer(lastNationSeen, officename, "ACEP");
-            }
-        });
-
         Mousetrap.bind(loadKeybind(keybinds.joinwa), (_) => {
             if(script.isHtmlRequestInProgress) return;
 
@@ -141,7 +125,10 @@ import { setupImportPage } from './import';
                         GM_setClipboard(`https://fast.nationstates.net/nation=${nation}/template-overall=none`, "text");
                         (async () => {
                             let success = await script.joinWorldAssembly(nation, appid);
-                            if(success) await script.set("lastSeenNation", nation);
+                            if(success) {
+                                await script.set("lastNationSeen", nation);
+                                lastNationSeen = nation;
+                            }
                         })();
                     }
                 }
@@ -150,11 +137,69 @@ import { setupImportPage } from './import';
             }
         });
 
+        Mousetrap.bind(loadKeybind(keybinds.move), (_) => {
+            if(script.isHtmlRequestInProgress) return;
+
+            let region = checkPageRegex(/region=([a-z0-9_\-]+)/);
+            if(region != null) {
+                (async () => {
+                    let success = await script.moveToRegion(region);
+                    if(success) {
+                        await script.set("lastRegionSeen", region);
+                        lastRegionSeen = region;
+                    }
+                })();
+            }
+        });
+
+        Mousetrap.bind(loadKeybind(keybinds.jpmove), (_) => {
+            if(script.isHtmlRequestInProgress) return;
+
+            let region: string | null = GM_getValue("jumpPoint");
+            if(region != null) {
+                (async () => {
+                    let success = await script.moveToRegion(region);
+                    if(success) {
+                        await script.set("lastRegionSeen", region);
+                        lastRegionSeen = region;
+                    }
+                })();
+            }
+        });
+
+        Mousetrap.bind(loadKeybind(keybinds.apply), (_) => {
+            if(script.isHtmlRequestInProgress) return;
+
+            script.applyToWorldAssembly();
+        });
+
+        Mousetrap.bind(loadKeybind(keybinds.resign), (_) => {
+            if(script.isHtmlRequestInProgress) return;
+
+            script.resignWorldAssembly();
+        });
+
+        Mousetrap.bind(loadKeybind(keybinds.region), (_) => {
+            if(script.isHtmlRequestInProgress) return;
+            if(!lastRegionSeen) return;
+
+            window.location.href = `https://${window.location.host}/region=${lastRegionSeen}`;
+        });
+
         Mousetrap.bind(loadKeybind(keybinds.nation), (_) => {
             if(!lastNationSeen) return;
 
             GM_setClipboard(`https://fast.nationstates.net/nation=${lastNationSeen}/template-overall=none`, "text");
-        })
+        });
+
+        Mousetrap.bind(loadKeybind(keybinds.ro), (_) => {
+            if(script.isHtmlRequestInProgress) return;
+
+            let officename: string | null = GM_getValue("roName");
+            if(officename != null && lastNationSeen != null) {
+                script.editRegionalOfficer(lastNationSeen, officename, "ACEP");
+            }
+        });
 
         Mousetrap.bind(loadKeybind(keybinds.prep), (_) => {
             if(script.isHtmlRequestInProgress) return;
