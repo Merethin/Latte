@@ -1,0 +1,5 @@
+node_modules/
+build/
+plugins/
+latte.user.js
+latte.min.user.js

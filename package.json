@@ -1,0 +1,19 @@
+{
+  "name": "latte",
+  "version": "0.0.1",
+  "description": "NationStates keybind userscript for tag raiding",
+  "main": "src/latte.ts",
+  "scripts": {
+    "prebuild": "mkdir -p build && node -p \"'export const VERSION = ' + JSON.stringify(require('./package.json').version) + ';'\" > build/version.ts",
+    "build": "esbuild src/latte.ts --bundle --outfile=build/out.js --format=iife && cat header.txt build/out.js >latte.user.js",
+    "postbuild": "esbuild src/latte.ts --bundle --minify --outfile=build/out.min.js --format=iife && cat header.txt build/out.min.js >latte.min.user.js"
+  },
+  "author": "Merethin",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "@types/mousetrap": "1.6.15",
+    "@types/tampermonkey": "5.0.4",
+    "esbuild": "0.25.5",
+    "mousetrap": "1.6.5"
+  }
+}

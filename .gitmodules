@@ -1,0 +1,4 @@
+[submodule "nsdotjs"]
+	path = nsdotjs
+	url = https://github.com/Merethin/nsdotjs.git
+	branch = newest

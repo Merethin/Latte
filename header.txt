@@ -1,0 +1,13 @@
+// ==UserScript==
+// @name         Latte
+// @namespace    http://tampermonkey.net/
+// @version      0.0.1
+// @description  NationStates userscript for tag raiding
+// @author       Merethin
+// @match        https://www.nationstates.net/*
+// @match        https://fast.nationstates.net/*
+// @grant        GM_setValue
+// @grant        GM_getValue
+// @grant        GM_setClipboard
+// @grant        window.close
+// ==/UserScript==
