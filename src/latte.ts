@@ -5,7 +5,7 @@ import { checkPage, checkPageRegex, injectUAWarning } from './lib';
 import { VERSION } from '../build/version';
 import { setupMainPage } from './mainPage';
 import { setupSettingsPage } from './settings';
-import { setupPrepPage } from './prep';
+import { setupPrepPage, prep } from './prep';
 import { setupQuiverPage } from './quiver';
 import { setupTagPage } from './tag';
 import { setupImportPage } from './import';
@@ -160,9 +160,8 @@ import { setupImportPage } from './import';
             if(script.isHtmlRequestInProgress) return;
 
             if(checkPage("page=blank/latte=prep")) {
-                // Click the Prep button
-                const element = document.getElementById("prepaction") as HTMLButtonElement;
-                element.click();
+                // Perform a Prep action
+                prep(script);
             } else {
                 // Go to Prep page
                 window.location.href = `https://${window.location.host}/page=blank/latte=prep`;

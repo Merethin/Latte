@@ -19,7 +19,7 @@ Latte is an all-in-one keybind script for NationStates tag raiding, inspired by 
 - Single-tap keybinds for most NationStates site actions relevant to tagging (mostly implemented)
 - WA application storage in a "quiver" (not started)
 - Latte "plugins" to import WA applications from places like GMail into Latte's quiver (not started)
-- Simple keybinds for fast switcher prepping, similar to Reliant (not started)
+- Simple keybinds for fast switcher prepping, similar to Reliant (implemented)
 - Simple keybinds for fast tagging of hit regions, similar to Henson (not started)
 
 ## Keybinds
@@ -39,7 +39,7 @@ These are only the defaults, based on Feather keybinds.
 - Show current region (default: Z) - load the current region page (not implemented).
 - Copy current nation (default: X) - copy the current nation link to clipboard (implemented).
 - Appoint/Dismiss RO (default: D) - appoint yourself as RO (implemented), rename governor (not implemented), dismiss other ROs (not implemented).
-- Prep (default: P) - take you to the prep page if not there (implemented), perform prepping actions (not implemented).
+- Prep (default: P) - take you to the prep page if not there (implemented), perform prepping actions (implemented).
 - Tag (default: T) - take you to the tag page if not there (implemented), perform tag actions (not implemented).
 
 ## Installing from Releases
