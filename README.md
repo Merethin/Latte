@@ -8,9 +8,9 @@ While best efforts are being made to comply with NationStates scripting rules, t
 
 ## Development Status
 
-Status: "pre-alpha", version 0.0.1
+Status: "alpha", version 0.1.0
 
-Many features are unfinished or straight up not implemented at all. Completely experimental. You should not use this unless you're a developer actively working on the project. Here be dragons.
+Most features have been implemented (major one missing is region tagging at this point), but have not been really tested and/or reviewed. Should preferably only be used by developers and/or testers.
 
 ## Overview (planned features & roadmap)
 
@@ -44,14 +44,14 @@ These are only the defaults, based on Feather keybinds.
 
 ## Installing from Releases
 
-**Note: As this is a pre-alpha, there are no releases. These instructions are meant for future end users.**
-**If you are a developer, refer to the development build instructions. If you aren't, wait until the project is in a more advanced state.**
-
 Go to the Releases page, select the latest release, and download either `latte.user.js` or `latte.min.user.js` (the latter is smaller in size but less readable). As long as you have the Tampermonkey extension installed, it should prompt you to install the script.
 
 After this, you probably want to install one of the following plugins to load WA applications from:
 
-- Currently, none
+- LatteNS (loads applications from WA join pages), click [here](https://raw.githubusercontent.com/Merethin/Latte/refs/heads/main/plugins/lattens.user.js) to install.
+- LatteGmail (loads applications from Gmail emails), click [here](https://raw.githubusercontent.com/Merethin/Latte/refs/heads/main/plugins/lattegmail.user.js) to install.
+  
+In the Tampermonkey menu, sort by order (by clicking the hashtag) and make sure all plugins are loaded after the main Latte script. As long as you installed Latte first and the plugins afterwards, this should be the case.
 
 ## Development Builds
 
