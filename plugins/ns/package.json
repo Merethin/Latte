@@ -1,0 +1,14 @@
+{
+  "name": "latte-ns",
+  "version": "0.1.0",
+  "description": "Latte plugin to load applications from WA join pages on NS",
+  "main": "plugin.ts",
+  "scripts": {
+    "build": "mkdir -p build && esbuild plugin.ts --bundle --outfile=build/out.js --format=iife && cat header.txt build/out.js >lattens.user.js"
+  },
+  "author": "Merethin",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "@types/tampermonkey": "5.0.4"
+  }
+}

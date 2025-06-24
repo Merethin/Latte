@@ -1,0 +1,11 @@
+// ==UserScript==
+// @name         LatteNS
+// @namespace    http://tampermonkey.net/
+// @version      0.1.0
+// @description  Latte plugin to load applications from WA join pages on NS
+// @author       Merethin
+// @match        https://*.nationstates.net/page=join_WA*
+// @match        https://*.nationstates.net/page=blank/latte=import*
+// @grant        GM_setValue
+// @grant        GM_getValue
+// ==/UserScript==

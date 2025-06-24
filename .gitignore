@@ -1,4 +1,3 @@
-node_modules/
-build/
-latte.user.js
-latte.min.user.js
+**/node_modules/
+**/build/
+**/*.user.js
