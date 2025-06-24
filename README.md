@@ -18,7 +18,7 @@ Latte is an all-in-one keybind script for NationStates tag raiding, inspired by 
 
 - Single-tap keybinds for most NationStates site actions relevant to tagging (mostly implemented)
 - WA application storage in a "quiver" (implemented)
-- Latte "plugins" to import WA applications from places like GMail into Latte's quiver (not started)
+- Latte "plugins" to import WA applications from places like GMail into Latte's quiver (implemented)
 - Simple keybinds for fast switcher prepping, similar to Reliant (implemented)
 - Simple keybinds for fast tagging of hit regions, similar to Henson (not started)
 
