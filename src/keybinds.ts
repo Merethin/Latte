@@ -1,3 +1,5 @@
+import { getConfigValue, setConfigValue } from "./config";
+
 export type Keybind = {
     key: string;
     defaultValue: string;
@@ -22,7 +24,7 @@ export const keybinds: Record<string, Keybind> = {
 }
 
 export function getKeybind(keybind: Keybind): string {
-    return GM_getValue(`keybind_${keybind.key}`, keybind.defaultValue);
+    return getConfigValue<string>(`keybind_${keybind.key}`, keybind.defaultValue);
 }
 
 export function loadKeybind(keybind: Keybind): string {
@@ -30,5 +32,5 @@ export function loadKeybind(keybind: Keybind): string {
 }
 
 export function setKeybind(keybind: Keybind, value: string): void {
-    GM_setValue(`keybind_${keybind.key}`, value);
+    setConfigValue(`keybind_${keybind.key}`, value);
 }

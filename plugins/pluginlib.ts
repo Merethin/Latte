@@ -21,7 +21,7 @@ export function removeApplication(nation: string): void {
 }
 
 export function importApplications(pluginName: string) {
-    let root = document.getElementById("quiver-table") as HTMLElement;
+    let root = document.getElementById("lt-content-quiver") as HTMLElement;
 
     var quiver = loadQuiver();
 
@@ -36,7 +36,7 @@ export function importApplications(pluginName: string) {
 
         var button = document.createElement("button");
         button.style.display = "none";
-        button.id = `appremove-${appid}`;
+        button.id = `lt-action-appremove-${appid}`;
         button.onclick = () => { removeApplication(nation); };
         root.appendChild(button);
     });

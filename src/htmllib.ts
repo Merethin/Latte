@@ -1,3 +1,19 @@
+export function getElement(id: string) {
+    return document.getElementById(id) as HTMLElement;
+}
+
+export function getButtonElement(id: string) {
+    return document.getElementById(id) as HTMLButtonElement;
+}
+
+export function getInputElement(id: string) {
+    return document.getElementById(id) as HTMLInputElement;
+}
+
+export function setText(id: string, text: string) {
+    getElement(id).innerText = text;
+}
+
 export function createElementsFromHTML(htmlString: string) {
     var div = document.createElement('div');
     div.innerHTML = htmlString.trim();
@@ -10,16 +26,13 @@ export function createTableElementsFromHTML(htmlString: string) {
     return tbody.childNodes;
 }
 
-export function toggleSwitcherListDisplay() {
-    let switcherList = document.getElementById("swlist") as HTMLElement;
-    let switcherToggle = document.getElementById("showswlist") as HTMLButtonElement;
-
-    if (switcherList.style.display === "none") {
-        switcherList.style.display = "block";
-        switcherToggle.innerText = "Hide Switcher List";
+export function toggleElementDisplay(element: HTMLElement, toggle: HTMLButtonElement, label: string) {
+    if (element.style.display === "none") {
+        element.style.display = "block";
+        toggle.innerText = `Hide ${label}`;
     } else {
-        switcherList.style.display = "none";
-        switcherToggle.innerText = "Show Switcher List";
+        element.style.display = "none";
+        toggle.innerText = `Show ${label}`;
     }
 }
 
@@ -31,6 +44,6 @@ export function injectWarning(warning: string) {
     content.prepend(container);
 }
 
-export function injectUAWarning() {
+export function injectUserAgentWarning() {
     injectWarning("You have not set a User Agent! Latte keybinds and other functionality will not work until you do so <a href='page=blank/latte=settings'>here</a>.");
 }

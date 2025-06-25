@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Latte
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0
+// @version      0.2.0
 // @description  NationStates userscript for tag raiding
 // @author       Merethin
 // @match        https://www.nationstates.net/*

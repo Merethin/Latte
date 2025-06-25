@@ -1,15 +1,16 @@
 // third-party imports first, then latte stuff
 import Mousetrap from 'mousetrap';
 import { NSScript, addSidebarButton } from '../nsdotjs/src/nsdotjs';
+import { getConfigValue, readConfigRecord, readConfigValue, saveConfigRecord } from './config';
 import { keybinds, loadKeybind } from './keybinds';
-import { checkPage, checkPageRegex, loadQuiver, saveQuiver } from './lib';
-import { injectUAWarning } from './htmllib';
-import { setupMainPage } from './mainPage';
-import { setupSettingsPage } from './settings';
-import { setupPrepPage, prep } from './prep';
-import { setupQuiverPage } from './quiver';
-import { setupTagPage } from './tag';
-import { setupImportPage } from './import';
+import { checkPage, checkPageRegex } from './lib';
+import { injectUserAgentWarning } from './htmllib';
+import { setupMainPage } from './pages/main';
+import { setupSettingsPage } from './pages/settings';
+import { setupPrepPage, prep } from './pages/prep';
+import { setupQuiverPage } from './pages/quiver';
+import { setupTagPage, tag } from './pages/tag';
+import { setupImportPage } from './pages/import';
 import { VERSION } from '../build/version';
 
 const NAME = "Latte";
@@ -19,7 +20,7 @@ const AUTHOR = "Merethin";
 (async function() {
     'use strict';
 
-    // fixme: this currently only works on Rift
+    // fixme: this currently only works on Rift/Rift Dark
     // nsdotjs limitation but it means that getting to the 
     // Latte main page on any other theme is tricky
     addSidebarButton(
@@ -31,7 +32,7 @@ const AUTHOR = "Merethin";
 
     // inject Latte content pages if necessary
     if(checkPage("page=blank/latte=main")) {
-        setupMainPage();
+        setupMainPage(NAME, AUTHOR, VERSION);
     } else if (checkPage("page=blank/latte=settings")) {
         setupSettingsPage();
     } else if (checkPage("page=blank/latte=prep")) {
@@ -44,20 +45,20 @@ const AUTHOR = "Merethin";
         setupImportPage();
     }
 
-    let userAgent: string | null = GM_getValue("userAgent");
+    let userAgent = readConfigValue<string>("userAgent");
     if(userAgent == null) {
         // latte=settings is the page to set your UA 
         // and latte=prep already has its own warning set up
         if(!checkPage("page=blank/latte=settings") 
         && !checkPage("page=blank/latte=prep")) {
-            injectUAWarning();
+            injectUserAgentWarning();
         }     
     } else {
         // Only load the NSScript and keybinds if we have a user agent
         let script = new NSScript(NAME, VERSION, AUTHOR, userAgent, async () => {});
 
         // load status bubble config and hide it if needed
-        let showStatusBubble = GM_getValue("showStatusBubble", 1);
+        let showStatusBubble = getConfigValue<boolean>("showStatusBubble", true);
         if(showStatusBubble) {
             script.statusBubble.show();
         } else {
@@ -125,7 +126,7 @@ const AUTHOR = "Merethin";
                 nation = checkPageRegex(/nation=([a-z0-9_\-]+)/);
                 appid = checkPageRegex(/appid=([0-9]+)/);
             } else {
-                quiver = loadQuiver();
+                quiver = readConfigRecord("quiver");
                 if(Object.keys(quiver).length > 0) {
                     [nation, appid] = Object.entries(quiver)[0];
                 } else {
@@ -144,7 +145,7 @@ const AUTHOR = "Merethin";
 
                         if(quiver) {
                             delete quiver[nation];
-                            saveQuiver(quiver);
+                            saveConfigRecord("quiver", quiver);
                         }
                     }
                 })();
@@ -169,7 +170,7 @@ const AUTHOR = "Merethin";
         Mousetrap.bind(loadKeybind(keybinds.jpmove), (_) => {
             if(script.isHtmlRequestInProgress) return;
 
-            let region: string | null = GM_getValue("jumpPoint");
+            let region = readConfigValue<string>("jumpPoint");
             if(region != null) {
                 (async () => {
                     let success = await script.moveToRegion(region);
@@ -209,7 +210,7 @@ const AUTHOR = "Merethin";
         Mousetrap.bind(loadKeybind(keybinds.ro), (_) => {
             if(script.isHtmlRequestInProgress) return;
 
-            let officename: string | null = GM_getValue("roName");
+            let officename = readConfigValue<string>("roName");
             if(officename != null && lastNationSeen != null) {
                 script.editRegionalOfficer(lastNationSeen, officename, "ACEP");
             }
@@ -231,7 +232,8 @@ const AUTHOR = "Merethin";
             if(script.isHtmlRequestInProgress) return;
 
             if(checkPage("page=blank/latte=tag")) {
-                // Do stuff
+                // Perform a Tag action
+                tag(script);
             } else {
                 // Go to Tag page
                 window.location.href = `https://${window.location.host}/page=blank/latte=tag`;
