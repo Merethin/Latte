@@ -8,7 +8,7 @@ While best efforts are being made to comply with NationStates scripting rules, t
 
 ## Development Status
 
-Status: "alpha", version 0.2.0
+Status: "beta", version 0.2.0
 
 All initially planned features have been implemented, but have not been really tested and/or reviewed. Should preferably only be used by developers and/or testers.
 
@@ -41,6 +41,10 @@ These are only the defaults, based on Feather keybinds.
 - Appoint RO (default: D) - appoint yourself as RO.
 - Prep (default: P) - load the prep page if not there, otherwise perform prepping actions (one per keypress).
 - Tag (default: T) - load the tag page if not there, otherwise perform tag actions (one per keypress).
+
+## Known Issues
+
+Unicode characters in WFEs _will_ break, despite NationStates itself supporting them. So no flags, emojis, overly special characters, etc. BBcode itself works completely fine.
 
 ## Installing from Releases
 
