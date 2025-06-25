@@ -1,3 +1,5 @@
+/* latte.ts - main script file */
+
 // third-party imports first, then latte stuff
 import Mousetrap from 'mousetrap';
 import { NSScript, addSidebarButton } from '../nsdotjs/src/nsdotjs';
@@ -13,7 +15,7 @@ import { setupTagPage, tag } from './pages/tag';
 import { setupImportPage } from './pages/import';
 import { VERSION } from '../build/version';
 
-const NAME = "Latte";
+const SCRIPT_NAME = "Latte";
 const AUTHOR = "Merethin";
 
 // called on every page load
@@ -32,7 +34,7 @@ const AUTHOR = "Merethin";
 
     // inject Latte content pages if necessary
     if(checkPage("page=blank/latte=main")) {
-        setupMainPage(NAME, AUTHOR, VERSION);
+        setupMainPage(SCRIPT_NAME, AUTHOR, VERSION);
     } else if (checkPage("page=blank/latte=settings")) {
         setupSettingsPage();
     } else if (checkPage("page=blank/latte=prep")) {
@@ -55,7 +57,7 @@ const AUTHOR = "Merethin";
         }     
     } else {
         // Only load the NSScript and keybinds if we have a user agent
-        let script = new NSScript(NAME, VERSION, AUTHOR, userAgent, async () => {});
+        let script = new NSScript(SCRIPT_NAME, VERSION, AUTHOR, userAgent, async () => {});
 
         // load status bubble config and hide it if needed
         let showStatusBubble = getConfigValue<boolean>("showStatusBubble", true);

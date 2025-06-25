@@ -1,3 +1,5 @@
+/* pages/tag.ts - page code for page=blank/latte=tag */
+
 import Mousetrap from "mousetrap";
 import { NSScript, prettify, ValidRegionTag } from "../../nsdotjs/src/nsdotjs";
 import { keybinds, loadKeybind } from "../keybinds";
@@ -9,7 +11,10 @@ import { tagPageHTML } from "./html/tag.html";
 const REGEX = 
 /https:\/\/(?:fast|www)\.nationstates\.net\/region=([a-z0-9_\-]+) hit by https:\/\/(?:fast|www)\.nationstates\.net\/nation=([a-z0-9_\-]+)/;
 
-export function setupTagPage() {
+/**
+ * Injects the tag page HTML into the DOM and sets up handlers.
+ */
+export function setupTagPage(): void {
     let password = readConfigValue("password");
     if(password == null) {
         injectWarning("You have not set a switcher password! Latte tagging will not work until you do so <a href='page=blank/latte=settings'>here</a>.");
@@ -104,7 +109,24 @@ function updateRegionCount(count: number) {
     setText("lt-status-count", `Regions Tagged: ${count}/${regions.length}`);
 }
 
-export async function tag(script: NSScript) {
+/**
+ * Using a state machine, performs one tagging action. Called every time the Tag key is pressed.
+ * 
+ * If the state is Start, logs in to the first puppet and moves to UploadBanner.
+ * If the state is Login, logs in to the next puppet and moves to UploadBanner. If out of puppets, moves to Finish.
+ * If the state is UploadBanner, uploads the banner. If this fails, it assumes the nation has not ROed/has
+ * lost RO permissions, and therefore skips this region and moves to Login. Otherwise, moves to UploadFlag.
+ * If the state is UploadFlag, uploads the flag. If this fails, moves to Login, otherwise SetBannerAndFlag.
+ * If the state is SetBannerAndFlag, sets them and moves to AddTag.
+ * If the state is AddTag, adds one tag. If out of tags to add, moves to RemoveTag.
+ * If the state is RemoveTag, removes one tag. If out of tags to remove, moves to BuildEmbassy.
+ * If the state is BuildEmbassy, requests one embassy. If out of embassies, moves back to Login.
+ * If the state is Finish, the process is finished and it does nothing.
+ * 
+ * @param script The NSScript object to use to make requests.
+ * @returns A Promise that resolves to nothing.
+ */
+export async function tag(script: NSScript): Promise<void> {
     const password = readConfigValue<string>("password");
     if(password == null) return;
 

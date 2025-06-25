@@ -1,3 +1,5 @@
+/* pages/import.ts - page code for page=blank/latte=import */
+
 import { canonicalize } from "../../nsdotjs/src/nsdotjs";
 import { readConfigRecord, saveConfigRecord } from "../config";
 import { getButtonElement, getElement, setText } from "../htmllib";
@@ -41,6 +43,10 @@ function clearPluginApps() {
     window.location.reload();
 }
 
+/**
+ * Injects the import page HTML, adds onclick handlers, and adds an event handler
+ * for when plugins inject their own applications into our template.
+ */
 export function setupImportPage() {
     // Insert main HTML
     let container = document.createElement("div");

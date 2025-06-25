@@ -1,8 +1,10 @@
+/* pages/prep.ts - page code for page=blank/latte=prep */
+
 import Mousetrap from "mousetrap";
 import { NSScript } from "../../nsdotjs/src/nsdotjs";
 import { keybinds, loadKeybind } from "../keybinds";
 import { readConfigList, readConfigValue } from "../config";
-import { applyAndHandleReapply, ApplyResult } from "../lib";
+import { checkApplyToWA, ApplyResult } from "../lib";
 import { injectWarning, 
     toggleElementDisplay, 
     createElementsFromHTML, 
@@ -12,7 +14,10 @@ import { prepPageHTML } from "./html/prep.html";
 
 const switchers = readConfigList("switchers");
 
-export function setupPrepPage() {
+/**
+ * Sets up the HTML for the prep page and creates event handlers.
+ */
+export function setupPrepPage(): void {
     // Check existing settings
     let userAgent = readConfigValue<string>("userAgent");
     if(userAgent == null) {
@@ -90,6 +95,21 @@ function updateSwitcherCount(count: number) {
     setText("lt-status-count", `Switchers Prepped: ${count}/${switchers.length}`);
 }
 
+/**
+ * Using a state machine, performs one prepping action. Called every time the Prep key is pressed.
+ * 
+ * If the state is Start, re-authenticates with the first puppet and moves to Apply.
+ * If the state is Apply, applies to join WA. If this fails, and it detects that you need to reapply,
+ * it moves to Reapply. Otherwise, moves to Reauth.
+ * If the state is Reapply, re-applies to join WA and moves to Reauth.
+ * If the state is Reauth, re-authenticates (reloading chk and localid) and moves to Move.
+ * If the state is Move, relocates to the jump point and moves to Login.
+ * If the state is Login, logs in to the next puppet and moves to Apply. If out of puppets, moves to Finish.
+ * If the state is Finish, the process is finished and it does nothing.
+ * 
+ * @param script The NSScript object to use to make requests.
+ * @returns A Promise that resolves to nothing.
+ */
 export async function prep(script: NSScript) {
     const jp = readConfigValue<string>("jumpPoint");
     const password = readConfigValue<string>("password");
@@ -117,7 +137,7 @@ export async function prep(script: NSScript) {
             break;
         }
         case PrepAction.Apply: {
-            const result = await applyAndHandleReapply(script, false);
+            const result = await checkApplyToWA(script);
             switch(result) {
                 case ApplyResult.Success: {
                     updateStatus("Applied to WA");

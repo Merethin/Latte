@@ -1,17 +1,39 @@
+/* lib.ts - utility functions that do not primarily use the DOM (the others go in htmllib.ts). */
+
 import { ApplyToWorldAssemblyFormData, NSScript } from "../nsdotjs/src/nsdotjs";
 import { setConfigValue } from "./config";
 
+/**
+ * Checks if the current page we're on contains a string.
+ * 
+ * @param page The string to check.
+ * @returns True if it does contain the string, False if it doesn't.
+ */
 export function checkPage(page: string): boolean {
     return window.location.href.includes(page);
 }
 
+/**
+ * Checks if the current page we're on matches a specific regex.
+ * This function is intended to be used on a regex with a single capture group.
+ * 
+ * @param regex The regex to match against.
+ * @returns The value of the matched regex's first capture group, or null if the page doesn't match.
+ */
 export function checkPageRegex(regex: RegExp): string | null {
     let result = regex.exec(window.location.href);
     if (result == null) return null;
     return result[1];
 }
 
-export function dataURLtoFile(dataurl: string, filename: string) {
+/**
+ * Converts a Base64 data: URL into a JS File object.
+ *
+ * @param dataurl The data: URL to convert.
+ * @param filename The filename to use for the File object.
+ * @returns The resulting File object.
+ */
+export function dataURLtoFile(dataurl: string, filename: string): File {
     var arr = dataurl.split(','),
         mime = (arr[0].match(/:(.*?);/) as RegExpMatchArray)[1],
         bstr = atob(arr[arr.length - 1]),
@@ -23,7 +45,14 @@ export function dataURLtoFile(dataurl: string, filename: string) {
     return new File([u8arr], filename, {type:mime});
 }
 
-export function encodeImageFileAsURL(
+/**
+ * Encodes a file into a Base64 data: URL and stores said URL in Latte's internal storage.
+ * 
+ * @param element The HTML file input element to get the file from.
+ * @param key The key to save the URL with in storage.
+ * @param callback A function called with the resulting URL once the process is finished.
+ */
+export function encodeFileAsURL(
     element: HTMLInputElement, 
     key: string, 
     callback: (url: string | ArrayBuffer | null) => void,
@@ -37,28 +66,33 @@ export function encodeImageFileAsURL(
     reader.readAsDataURL(file);
 }
 
+/**
+ * Return value of checkApplyToWA() - either Success or Failure, or if the 
+ * request failed because the nation has already applied to the WA, MustReapply.
+ */
 export enum ApplyResult {
     Success,
     MustReapply,
     Failure
 };
 
-export async function applyAndHandleReapply(
+/**
+ * Applies to join the World Assembly and, in case of failure, checks whether the
+ * current nation needs to reapply instead.
+ * 
+ * This function exists because the standard script.applyToWorldAssembly() in nsdotjs
+ * doesn't distinguish from a failure to apply and a need to reapply.
+ *
+ * @param context The NSScript object to use to make the request.
+ * @returns A Promise that resolves to either 'Success', 'Failure', or 'MustReapply'.
+ */
+export async function checkApplyToWA(
     context: NSScript,
-    reapply?: boolean,
 ): Promise<ApplyResult> {
-    let payload: ApplyToWorldAssemblyFormData;
-    if (reapply) {
-        payload = {
-            action: "join_UN",
-            resend: "1",
-        };
-    } else {
-        payload = {
-            action: "join_UN",
-            submit: "1",
-        };
-    }
+    let payload: ApplyToWorldAssemblyFormData = {
+        action: "join_UN",
+        submit: "1",
+    };
 
     const text = await context.getNsHtmlPage("page=UN_status", payload);
     if (

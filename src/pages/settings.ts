@@ -1,5 +1,7 @@
+/* pages/settings.ts - page code for page=blank/latte=settings */
+
 import { canonicalize, prettify } from '../../nsdotjs/src/nsdotjs';
-import { encodeImageFileAsURL } from '../lib';
+import { encodeFileAsURL } from '../lib';
 import { createElementsFromHTML, getButtonElement, getElement, getInputElement, setText, toggleElementDisplay } from '../htmllib';
 import { setKeybind, getKeybind, keybinds, Keybind } from '../keybinds';
 import { getConfigValue, readConfigList, readConfigValue, saveConfigList, setConfigValue } from '../config';
@@ -116,14 +118,14 @@ function updateRemoveTags() {
 
 function updateBanner() {
     let input = document.getElementById("lt-input-banner") as HTMLInputElement;
-    encodeImageFileAsURL(input, "banner", (url) => {
+    encodeFileAsURL(input, "banner", (url) => {
         (getElement("lt-content-banner") as HTMLImageElement).src = url as string;
     });
 }
 
 function updateFlag() {
     let input = getInputElement("lt-input-flag");
-    encodeImageFileAsURL(input, "flag", (url) => {
+    encodeFileAsURL(input, "flag", (url) => {
         (getElement("lt-content-flag") as HTMLImageElement).src = url as string;
     });
 }
@@ -161,6 +163,10 @@ function resetKeybind(keybind: Keybind) {
     getButtonElement(`lt-resetkey-${keybind.key}`).setAttribute("disabled", "true");
 }
 
+/**
+ * Loads existing settings, injects the settings page HTML into the DOM
+ * and sets up event handlers.
+ */
 export function setupSettingsPage() {
     // Load existing settings
     const userAgentName = getConfigValue<string>("userAgent", "none");

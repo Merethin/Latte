@@ -1,3 +1,5 @@
+/* pages/quiver.ts - page code for page=blank/latte=quiver */
+
 import { prettify } from "../../nsdotjs/src/nsdotjs";
 import { readConfigRecord, saveConfigRecord } from "../config";
 import { createTableElementsFromHTML, getButtonElement, getElement, setText } from "../htmllib";
@@ -10,6 +12,10 @@ function clearQuiver() {
     window.location.reload();
 }
 
+/**
+ * Loads the current quiver and inserts it alongside the HTML
+ * into the DOM, as well as setting up event handlers.
+ */
 export function setupQuiverPage() {
     var quiver = readConfigRecord("quiver");
 
