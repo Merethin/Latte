@@ -197,7 +197,7 @@ export async function prep(script: NSScript) {
             if(success) {
                 updateStatus(`Logged in to ${nation}`);
                 updateSwitcherCount(nextNationIndex);
-                setText("prepnation", nation);
+                setText("lt-status-nation", nation);
                 prepNation = nation;
             } else {
                 updateStatus(`Failed to log in to ${nation}`);
