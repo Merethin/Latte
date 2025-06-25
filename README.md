@@ -8,39 +8,39 @@ While best efforts are being made to comply with NationStates scripting rules, t
 
 ## Development Status
 
-Status: "alpha", version 0.1.0
+Status: "alpha", version 0.2.0
 
-Most features have been implemented (major one missing is region tagging at this point), but have not been really tested and/or reviewed. Should preferably only be used by developers and/or testers.
+All initially planned features have been implemented, but have not been really tested and/or reviewed. Should preferably only be used by developers and/or testers.
 
-## Overview (planned features & roadmap)
+## Overview
 
 Latte is an all-in-one keybind script for NationStates tag raiding, inspired by the likes of Feather, Railgun and Reliant.
 
-- Single-tap keybinds for most NationStates site actions relevant to tagging (mostly implemented)
-- WA application storage in a "quiver" (implemented)
-- Latte "plugins" to import WA applications from places like GMail into Latte's quiver (implemented)
-- Simple keybinds for fast switcher prepping, similar to Reliant (implemented)
-- Simple keybinds for fast tagging of hit regions, similar to Henson (not started)
+- Single-tap keybinds for most NationStates site actions relevant to tagging
+- WA application storage in a "quiver"
+- Latte "plugins" to import WA applications from places like GMail into Latte's quiver
+- Simple keybinds for fast switcher prepping, similar to Reliant
+- Simple keybinds for fast tagging of hit regions, similar to Henson
 
 ## Keybinds
 
 Latte's keybinds are all configurable by going to https://www.nationstates.net/page=blank/latte=settings.
 These are only the defaults, based on Feather keybinds.
 
-- Refresh (default: A) - reload the page (implemented).
-- Update Auth (default: J) - update the chk and localid values needed to make requests (implemented). if certain actions aren't working for no reason, you probably need to do this.
-- Endorse (default: S) - endorse a nation (implemented).
-- Unendorse (default: L) - withdraw endorsement from a nation (implemented).
-- Join WA (default: R) - confirm WA application from either the join_WA page (implemented) or Latte's internal WA application storage, aka "quiver" (implemented), and copy the nation link to clipboard (implemented).
-- Move (default: F) - move to the current region (implemented).
-- Move to Jump Point (default: B) - move to the jump point (implemented), which can be configured in the Settings page above.
-- Apply to WA (default: H) - apply to join the world assembly (implemented).
-- Resign from WA (default: E) - resign from the world assembly (implemented).
-- Show Current Region (default: Z) - load the current region page (implemented).
-- Copy Current Nation (default: X) - copy the current nation link to clipboard (implemented).
-- Appoint/Dismiss RO (default: D) - appoint yourself as RO (implemented), rename governor (not implemented), dismiss other ROs (not implemented).
-- Prep (default: P) - take you to the prep page if not there (implemented), perform prepping actions (implemented).
-- Tag (default: T) - take you to the tag page if not there (implemented), perform tag actions (not implemented).
+- Refresh (default: A) - reload the page.
+- Update Auth (default: J) - update the chk and localid values needed to make requests. if certain actions aren't working for no reason, you probably need to do this.
+- Endorse (default: S) - endorse a nation.
+- Unendorse (default: L) - withdraw endorsement from a nation.
+- Join WA (default: R) - confirm WA application from either the join_WA page or Latte's internal WA application storage, aka "quiver", and copy the nation link to clipboard.
+- Move (default: F) - move to the current region.
+- Move to Jump Point (default: B) - move to the jump point, which can be configured in the Settings page above.
+- Apply to WA (default: H) - apply to join the world assembly.
+- Resign from WA (default: E) - resign from the world assembly.
+- Show Current Region (default: Z) - load the current region page.
+- Copy Current Nation (default: X) - copy the current nation link to clipboard.
+- Appoint RO (default: D) - appoint yourself as RO.
+- Prep (default: P) - load the prep page if not there, otherwise perform prepping actions (one per keypress).
+- Tag (default: T) - load the tag page if not there, otherwise perform tag actions (one per keypress).
 
 ## Installing from Releases
 
@@ -48,8 +48,10 @@ Go to the Releases page, select the latest release, and download either `latte.u
 
 After this, you probably want to install one of the following plugins to load WA applications from:
 
-- LatteNS (loads applications from WA join pages), click [here](https://raw.githubusercontent.com/Merethin/Latte/refs/heads/main/plugins/lattens.user.js) to install.
-- LatteGmail (loads applications from Gmail emails), click [here](https://raw.githubusercontent.com/Merethin/Latte/refs/heads/main/plugins/lattegmail.user.js) to install.
+- LatteNS (loads applications from WA join pages - `page=join_WA`)
+- LatteGmail (loads applications from Gmail emails)
+
+These plugins can also be found in the releases page, next to the main script.
   
 In the Tampermonkey menu, sort by order (by clicking the hashtag) and make sure all plugins are loaded after the main Latte script. As long as you installed Latte first and the plugins afterwards, this should be the case.
 
