@@ -8,7 +8,7 @@ import { importPageHTML } from "./html/import.html";
 function importQuiver() {
     var quiver = readConfigRecord("quiver");
 
-    const tableNodes = getElement("quiver-table").children;
+    const tableNodes = getElement("lt-content-quiver").children;
     for(var node of tableNodes) {
         if(node.nodeName == "BUTTON") continue;
         if(node.children[0].nodeName == "TH") continue;
@@ -30,7 +30,7 @@ function importQuiver() {
 }
 
 function clearPluginApps() {
-    const tableNodes = getElement("quiver-table").children;
+    const tableNodes = getElement("lt-content-quiver").children;
     for(var node of tableNodes) {
         if(node.nodeName == "BUTTON") continue;
         if(node.children[0].nodeName == "TH") continue;
