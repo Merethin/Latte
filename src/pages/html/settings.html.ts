@@ -44,7 +44,7 @@ Update Status Bubble Settings
 <fieldset>
 <legend>Jump Point</legend>
 <div class="frdata"><p>The region to move switchers to when prepping.</p></div></br>
-<input type="text" name="lt-input-jumppoint" placeholder="Enter Jump Point..."></input>
+<input type="text" id="lt-input-jumppoint" placeholder="Enter Jump Point..."></input>
 <button id="lt-btn-jumppoint" class="button icon approve primary">Set Jump Point</button>
 <p id="lt-label-jumppoint">Current Jump Point: none</p>
 </fieldset>
@@ -57,7 +57,7 @@ Update Status Bubble Settings
 <fieldset>
 <legend>Switcher List</legend>
 <div class="frdata"><p>A list of all your switcher puppets.</p></div></br>
-<textarea name="lt-input-switchers" rows="15" cols="40"></textarea></br>
+<textarea id="lt-input-switchers" rows="15" cols="40"></textarea></br>
 <button id="lt-btn-switchers" class="button icon approve primary">Update Switcher List</button>
 <button id="lt-toggle-switchers" class="button">Show Switcher List</button>
 <div id="lt-content-switchers" style="display: none;">
