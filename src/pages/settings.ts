@@ -21,7 +21,7 @@ function updateJumpPoint() {
     if(input.value != "") {
         let jp = canonicalize(input.value);
         setConfigValue("jumpPoint", jp);
-        setText("lt-label-jumppoint", `Current Jump Point: ${prettify(jp)})`);
+        setText("lt-label-jumppoint", `Current Jump Point: ${prettify(jp)}`);
         input.value = "";
     }
 }
@@ -200,7 +200,7 @@ export function setupSettingsPage() {
         else var disabled = "";
 
         keybindHtml += `<p>${keybind.label}</p>
-        <input type="text" name="lt-key-${keybind.key}" placeholder="Current: ${currentValue}"></input>
+        <input type="text" id="lt-key-${keybind.key}" placeholder="Current: ${currentValue}"></input>
         <button id="lt-updatekey-${keybind.key}" class="button icon approve primary">Update</button>
         <button id="lt-resetkey-${keybind.key}" class="button icon remove danger" ${disabled}>Reset</button>`
     });

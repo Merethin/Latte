@@ -9,7 +9,7 @@ export const tagPageHTML = `
 <p>Only regions hit by your switchers will be counted.</p>
 </div>
 </br>
-<textarea name="lt-input-regions" rows="10" cols="30"></textarea></br>
+<textarea id="lt-input-regions" rows="10" cols="30"></textarea></br>
 <button id="lt-btn-update" class="button icon approve primary">Add Regions</button>
 </fieldset>
 
