@@ -1,7 +1,7 @@
 /* pages/prep.ts - page code for page=blank/latte=prep */
 
 import Mousetrap from "mousetrap";
-import { NSScript } from "../../nsdotjs/src/nsdotjs";
+import { NSScript, prettify } from "../../nsdotjs/src/nsdotjs";
 import { keybinds, loadKeybind } from "../keybinds";
 import { readConfigList, readConfigValue } from "../config";
 import { checkApplyToWA, ApplyResult } from "../lib";
@@ -130,9 +130,9 @@ export async function prep(script: NSScript) {
             await script.reAuthenticate();
 
             prepNation = lastNationSeen;
-            updateStatus(`Started with nation ${prepNation}`);
+            updateStatus(`Started with nation ${prettify(prepNation)}`);
             updateSwitcherCount(switchers.indexOf(prepNation));
-            setText("lt-status-nation", prepNation);
+            setText("lt-status-nation", prettify(prepNation));
             prepState = PrepAction.Apply;
             break;
         }
@@ -175,9 +175,9 @@ export async function prep(script: NSScript) {
         case PrepAction.Move: {
             const success = await script.moveToRegion(jp);
             if(success)
-                updateStatus(`Moved to ${jp}`);
+                updateStatus(`Moved to ${prettify(jp)}`);
             else 
-                updateStatus(`Failed to move to ${jp}`);
+                updateStatus(`Failed to move to ${prettify(jp)}`);
             prepState = PrepAction.Login;
             break;
         }
@@ -195,12 +195,12 @@ export async function prep(script: NSScript) {
 
             const success = await script.login(nation, password);
             if(success) {
-                updateStatus(`Logged in to ${nation}`);
+                updateStatus(`Logged in to ${prettify(nation)}`);
                 updateSwitcherCount(nextNationIndex);
-                setText("lt-status-nation", nation);
+                setText("lt-status-nation", prettify(nation));
                 prepNation = nation;
             } else {
-                updateStatus(`Failed to log in to ${nation}`);
+                updateStatus(`Failed to log in to ${prettify(nation)}`);
                 break;
             }
             prepState = PrepAction.Apply;

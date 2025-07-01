@@ -146,12 +146,12 @@ export async function tag(script: NSScript): Promise<void> {
 
             const success = await script.login(nation, password);
             if(success) {
-                updateStatus(`Logged in to ${nation}`);
+                updateStatus(`Logged in to ${prettify(nation)}`);
                 updateRegionCount(index);
-                setText("lt-status-nation", nation);
+                setText("lt-status-nation", prettify(nation));
                 tagRegion = regions[index];
             } else {
-                updateStatus(`Failed to log in to ${nation}`);
+                updateStatus(`Failed to log in to ${prettify(nation)}`);
                 break;
             }
             tagState = TagAction.UploadBanner;

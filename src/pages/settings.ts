@@ -222,7 +222,7 @@ export function setupSettingsPage() {
 
     // Insert loaded settings
     setText("lt-label-useragent", `Current User Agent: ${userAgentName}`);
-    setText("lt-label-jumppoint", `Current Jump Point: ${jumpPointName}`);
+    setText("lt-label-jumppoint", `Current Jump Point: ${prettify(jumpPointName)}`);
     setText("lt-label-roname", `Current RO Name: ${roName}`);
     getElement("lt-content-keybinds").append(...createElementsFromHTML(keybindHtml));
     getElement("lt-content-password").append(...createElementsFromHTML(passwordStatusHtml));
