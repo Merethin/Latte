@@ -1,6 +1,6 @@
 {
   "name": "latte",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "NationStates keybind userscript for tag raiding",
   "main": "src/latte.ts",
   "scripts": {
