@@ -241,5 +241,12 @@ const AUTHOR = "Merethin";
                 window.location.href = `https://${window.location.host}/page=blank/latte=tag`;
             }
         });
+
+        Mousetrap.bind(loadKeybind(keybinds.detag), (_) => {
+            if(script.isHtmlRequestInProgress) return;
+            if(!lastRegionSeen) return;
+
+            window.open(`https://eyebeast.calref.ca/?region=${lastRegionSeen}`, '_blank');
+        });
     }
 })();

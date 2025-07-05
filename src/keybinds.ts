@@ -29,6 +29,7 @@ export const keybinds: Record<string, Keybind> = {
     ro: {key: "ro", defaultValue: "D", label: "Appoint RO"},
     prep: {key: "prep", defaultValue: "P", label: "Prep Switchers"},
     tag: {key: "tag", defaultValue: "T", label: "Tag Regions"},
+    detag: {key: "detag", defaultValue: "O", label: "Open Current Region in Eyebeast"},
 }
 
 /**
