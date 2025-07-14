@@ -7,12 +7,14 @@ import { getConfigValue, readConfigRecord, readConfigValue, saveConfigRecord } f
 import { keybinds, loadKeybind } from './keybinds';
 import { checkPage, checkPageRegex } from './lib';
 import { injectUserAgentWarning } from './htmllib';
+import { saveEyebeastSnapshot } from './eyebeast';
 import { setupMainPage } from './pages/main';
 import { setupSettingsPage } from './pages/settings';
 import { setupPrepPage, prep } from './pages/prep';
 import { setupQuiverPage } from './pages/quiver';
 import { setupTagPage, tag } from './pages/tag';
 import { setupImportPage } from './pages/import';
+import { setupSnapshotPage } from './pages/snapshot';
 import { VERSION } from '../build/version';
 
 const SCRIPT_NAME = "Latte";
@@ -21,6 +23,15 @@ const AUTHOR = "Merethin";
 // called on every page load
 (async function() {
     'use strict';
+
+    // if on eyebeast, only do eyebeast stuff
+    if(checkPage("eyebeast.calref.ca")) {
+        Mousetrap.bind(loadKeybind(keybinds.detag), (_) => {
+            saveEyebeastSnapshot();
+        });
+
+        return;
+    }
 
     // fixme: this currently only works on Rift/Rift Dark
     // nsdotjs limitation but it means that getting to the 
@@ -45,6 +56,8 @@ const AUTHOR = "Merethin";
         setupTagPage();
     } else if (checkPage("page=blank/latte=import")) {
         setupImportPage();
+    } else if (checkPage("page=blank/latte=snapshot")) {
+        setupSnapshotPage();
     }
 
     let userAgent = readConfigValue<string>("userAgent");

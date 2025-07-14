@@ -66,4 +66,18 @@ export const mainPageHTML = `
 <span class='navtext'>Open Tagging Menu</span>
 </i>
 </a>
+</fieldset>
+
+<fieldset>
+<legend>View Eyebeast Snapshot</legend>
+<div class="frdata">
+<p>View the current region snapshot last loaded from Eyebeast.
+</p>
+</div>
+</br>
+<a href='page=blank/latte=snapshot'>
+<i class='icon-town-hall'>
+<span class='navtext'>View Snapshot</span>
+</i>
+</a>
 </fieldset>`

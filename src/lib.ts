@@ -66,6 +66,24 @@ export function encodeFileAsURL(
     reader.readAsDataURL(file);
 }
 
+export async function convertImageToBase64(
+    imgElement: HTMLImageElement, 
+): Promise<string> {
+    if(!imgElement.complete || imgElement.naturalWidth === 0)
+        throw new Error("Image isn't loaded yet");
+    
+    const canvas = document.createElement('canvas');
+    canvas.width = imgElement.naturalWidth;
+    canvas.height = imgElement.naturalHeight;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error("Failed to get canvas context");
+
+    ctx.drawImage(imgElement, 0, 0);
+
+    return canvas.toDataURL('image/png');
+}
+
 /**
  * Return value of checkApplyToWA() - either Success or Failure, or if the 
  * request failed because the nation has already applied to the WA, MustReapply.
