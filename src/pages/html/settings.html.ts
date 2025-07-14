@@ -27,6 +27,21 @@ Update Status Bubble Settings
 </button>
 </fieldset>
 <fieldset>
+<legend>Detag Mode</legend>
+<div class="frdata">
+<p>Detag mode will open Eyebeast and restore native ROs when using the "appoint and switch" key.
+Additionally, pressing the Tag/Detag key outside of the tag/detag pages will lead you to the detag page instead.</p>
+</div></br>
+<label>
+<input type="checkbox" id="lt-input-detagmode"></input>
+Detag Mode
+</label>
+</br></br>
+<button id="lt-btn-detagmode" type="submit" class="button icon approve primary">
+Update Detag Mode Settings
+</button>
+</fieldset>
+<fieldset>
 <legend>RO Name</legend>
 <div class="frdata"><p>When appointing yourself as an officer, the office name to use.</p></div></br>
 <input type="text" id="lt-input-roname" placeholder="Enter RO name..."></input>

@@ -138,6 +138,12 @@ function updateStatusBubble() {
     window.location.reload();
 }
 
+function updateDetagMode() {
+    let input = getInputElement("lt-input-detagmode");
+    let detagMode = input.checked;
+    setConfigValue("detagMode", detagMode);
+}
+
 function updateKeybind(keybind: Keybind) {
     let input = getInputElement(`lt-key-${keybind.key}`);
     if(input.value != "") {
@@ -251,6 +257,7 @@ export function setupSettingsPage() {
     getButtonElement("lt-btn-roname").onclick = updateROName;
     getButtonElement("lt-btn-switchers").onclick = updateSwitcherList;
     getButtonElement("lt-btn-statusbubble").onclick = updateStatusBubble;
+    getButtonElement("lt-btn-detagmode").onclick = updateDetagMode;
     getButtonElement("lt-btn-wfe").onclick = updateWFE;
     getButtonElement("lt-btn-embassy").onclick = updateEmbassies;
     getButtonElement("lt-btn-tagadd").onclick = updateAddTags;
@@ -280,4 +287,8 @@ export function setupSettingsPage() {
     // Load status bubble checkbox
     const showStatusBubble = getConfigValue<boolean>("showStatusBubble", true);
     getInputElement("lt-input-statusbubble").checked = showStatusBubble;
+
+    // Load detag mode checkbox
+    const detagMode = getConfigValue<boolean>("detagMode", false);
+    getInputElement("lt-input-detagmode").checked = detagMode;
 }
