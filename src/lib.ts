@@ -111,3 +111,18 @@ export async function checkApplyToWA(
     context.statusBubble.warn("Failed to apply to World Assembly");
     return ApplyResult.Failure;
 }
+
+/**
+ * Given a string, replaces all non-ASCII characters with HTML entities (&#XXXX;).
+ * 
+ * @param str The string to encode.
+ * @returns The encoded string.
+ */
+export function encodeUnicodeAsHTMLEntities(str: string): string {
+    let result = '';
+    for (const char of str) {
+        const code = char.codePointAt(0) as number;
+        result += code > 127 ? `&#${code};` : char;
+    }
+    return result;
+}

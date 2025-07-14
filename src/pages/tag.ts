@@ -3,7 +3,7 @@
 import Mousetrap from "mousetrap";
 import { NSScript, prettify, ValidRegionTag } from "../../nsdotjs/src/nsdotjs";
 import { keybinds, loadKeybind } from "../keybinds";
-import { dataURLtoFile } from "../lib";
+import { dataURLtoFile, encodeUnicodeAsHTMLEntities } from "../lib";
 import { getButtonElement, getElement, getInputElement, injectWarning, setText } from "../htmllib";
 import { getConfigValue, readConfigList, readConfigValue } from "../config";
 import { tagPageHTML } from "./html/tag.html";
@@ -209,8 +209,7 @@ export async function tag(script: NSScript): Promise<void> {
             break;
         }
         case TagAction.UpdateWFE: {
-            console.log(wfe);
-            const success = await script.changeWFE(wfe);
+            const success = await script.changeWFE(encodeUnicodeAsHTMLEntities(wfe));
 
             if(success)
                 updateStatus("Changed WFE");
