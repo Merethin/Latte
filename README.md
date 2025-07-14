@@ -1,6 +1,6 @@
 # Latte
 
-An all-in-one NationStates userscript for tag raiding.
+An all-in-one NationStates userscript for R/D.
 
 ## DISCLAIMER
 
@@ -8,19 +8,20 @@ While best efforts are being made to comply with NationStates scripting rules, t
 
 ## Development Status
 
-Status: "beta", version 0.2.0
+Status: beta, version 0.3.0
 
-All initially planned features have been implemented, but have not been really tested and/or reviewed. Should preferably only be used by developers and/or testers.
+Somewhat reliable, but not fully tested or guaranteed to work.
 
 ## Overview
 
-Latte is an all-in-one keybind script for NationStates tag raiding, inspired by the likes of Feather, Railgun and Reliant.
+Latte is an all-in-one keybind script for NationStates R/D, mostly concerned with tagging and detagging, inspired by the likes of Feather, Railgun and Reliant.
 
-- Single-tap keybinds for most NationStates site actions relevant to tagging
+- Single-tap keybinds for most NationStates site actions relevant to tagging and detagging
 - WA application storage in a "quiver"
 - Latte "plugins" to import WA applications from places like GMail into Latte's quiver
 - Simple keybinds for fast switcher prepping, similar to Reliant
 - Simple keybinds for fast tagging of hit regions, similar to Henson
+- Simple keybinds for fast detagging of hit regions, using Eyebeast and manual selection of snapshots (in progress)
 
 ## Keybinds
 
@@ -40,11 +41,8 @@ These are only the defaults, based on Feather keybinds.
 - Copy Current Nation (default: X) - copy the current nation link to clipboard.
 - Appoint RO (default: D) - appoint yourself as RO.
 - Prep (default: P) - load the prep page if not there, otherwise perform prepping actions (one per keypress).
-- Tag (default: T) - load the tag page if not there, otherwise perform tag actions (one per keypress).
-
-## Known Issues
-
-Unicode characters in WFEs _will_ break, despite NationStates itself supporting them. So no flags, emojis, overly special characters, etc. BBcode itself works completely fine.
+- Tag/Detag (default: T) - load the tag/detag page if not there, otherwise perform tag/detag actions (one per keypress).
+- Open Eyebeast/Save Snapshot (default: O) - if on NS, load the current region in Eyebeast, if on Eyebeast, save the currently selected snapshot to the userscript's storage and close the Eyebeast tab.
 
 ## Installing from Releases
 
