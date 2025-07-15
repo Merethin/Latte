@@ -60,6 +60,11 @@ const AUTHOR = "Merethin";
         setupSnapshotPage();
     }
 
+    if(checkPage("template-overall=none")) {
+        // Disable all images on template-overall=none pages
+        document.querySelectorAll("img").forEach((element) => element.removeAttribute("src"));
+    }
+
     let userAgent = readConfigValue<string>("userAgent");
     if(userAgent == null) {
         // latte=settings is the page to set your UA 
