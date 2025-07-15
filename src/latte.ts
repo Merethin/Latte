@@ -16,6 +16,7 @@ import { setupTagPage, tag } from './pages/tag';
 import { setupImportPage } from './pages/import';
 import { setupSnapshotPage } from './pages/snapshot';
 import { VERSION } from '../build/version';
+import { isMobile, setupMobileEndorseButton, setupMobileMoveButton } from './mobile';
 
 const SCRIPT_NAME = "Latte";
 const AUTHOR = "Merethin";
@@ -60,6 +61,11 @@ const AUTHOR = "Merethin";
         setupSnapshotPage();
     }
 
+    if(checkPage("template-overall=none")) {
+        // Disable all images on template-overall=none pages
+        document.querySelectorAll("img").forEach((element) => element.removeAttribute("src"));
+    }
+
     let userAgent = readConfigValue<string>("userAgent");
     if(userAgent == null) {
         // latte=settings is the page to set your UA 
@@ -71,6 +77,21 @@ const AUTHOR = "Merethin";
     } else {
         // Only load the NSScript and keybinds if we have a user agent
         let script = new NSScript(SCRIPT_NAME, VERSION, AUTHOR, userAgent, async () => {});
+
+        // Set up mobile tagging buttons
+        if(getConfigValue<boolean>("mobile", isMobile())) {
+            if(checkPage("template-overall=none")) {
+                let nation = checkPageRegex(/\/nation=([a-z0-9_\-]+)/);
+                if(nation != null) {
+                    setupMobileEndorseButton(nation, SCRIPT_NAME, VERSION, AUTHOR, userAgent);
+                }
+
+                let region = checkPageRegex(/region=([a-z0-9_\-]+)/);
+                if(region != null) {
+                    setupMobileMoveButton(region, SCRIPT_NAME, VERSION, AUTHOR, userAgent);
+                }
+            }
+        }
 
         // load status bubble config and hide it if needed
         let showStatusBubble = getConfigValue<boolean>("showStatusBubble", true);
