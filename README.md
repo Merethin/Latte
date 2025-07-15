@@ -4,7 +4,7 @@ An all-in-one NationStates userscript for R/D.
 
 ## DISCLAIMER
 
-While best efforts are being made to comply with NationStates scripting rules, this tool is in active development and should not be assumed to be legal. It should only be used for testing purposes by its developers until this disclaimer is removed.
+While best efforts are being made to comply with NationStates scripting rules, this tool is in active development and should not be assumed to be legal. As always, it is up to you, the user, to make sure everything you use follows the NationStates scripting rules.
 
 ## Development Status
 
@@ -43,6 +43,7 @@ These are only the defaults, based on Feather keybinds.
 - Prep (default: P) - load the prep page if not there, otherwise perform prepping actions (one per keypress).
 - Tag/Detag (default: T) - load the tag/detag page if not there, otherwise perform tag/detag actions (one per keypress).
 - Open Eyebeast/Save Snapshot (default: O) - if on NS, load the current region in Eyebeast, if on Eyebeast, save the currently selected snapshot to the userscript's storage and close the Eyebeast tab.
+- Appoint & Switch (default: V) - try to appoint yourself as RO, (if on detag mode: opens eyebeast, dismisses raider ROs, restores native ROs), resign from the WA, and join the WA on the next puppet (one action per keypress).
 
 ## Installing from Releases
 
