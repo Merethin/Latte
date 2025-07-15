@@ -28,8 +28,9 @@ export const keybinds: Record<string, Keybind> = {
     nation: {key: "nation", defaultValue: "X", label: "Copy Current Nation"},
     ro: {key: "ro", defaultValue: "D", label: "Appoint RO"},
     prep: {key: "prep", defaultValue: "P", label: "Prep Switchers"},
-    tag: {key: "tag", defaultValue: "T", label: "Tag Regions"},
-    detag: {key: "detag", defaultValue: "O", label: "Open Current Region in Eyebeast"},
+    tag: {key: "tag", defaultValue: "T", label: "Tag/Detag Regions"},
+    detag: {key: "detag", defaultValue: "O", label: "Open Eyebeast/Select Snapshot"},
+    switch: {key: "switch", defaultValue: "V", label: "Appoint & Switch"},
 }
 
 /**

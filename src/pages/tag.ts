@@ -110,14 +110,15 @@ function updateRegionCount(count: number) {
 }
 
 /**
- * Using a state machine, performs one tagging action. Called every time the Tag key is pressed.
+ * Using a state machine, performs one tagging action. Called every time the Tag/Detag key is pressed.
  * 
  * If the state is Start, logs in to the first puppet and moves to UploadBanner.
  * If the state is Login, logs in to the next puppet and moves to UploadBanner. If out of puppets, moves to Finish.
  * If the state is UploadBanner, uploads the banner. If this fails, it assumes the nation has not ROed/has
  * lost RO permissions, and therefore skips this region and moves to Login. Otherwise, moves to UploadFlag.
  * If the state is UploadFlag, uploads the flag. If this fails, moves to Login, otherwise SetBannerAndFlag.
- * If the state is SetBannerAndFlag, sets them and moves to AddTag.
+ * If the state is SetBannerAndFlag, sets them and moves to UpdateWFE.
+ * If the state is UpdateWFE, sets the WFE and moves to AddTag.
  * If the state is AddTag, adds one tag. If out of tags to add, moves to RemoveTag.
  * If the state is RemoveTag, removes one tag. If out of tags to remove, moves to BuildEmbassy.
  * If the state is BuildEmbassy, requests one embassy. If out of embassies, moves back to Login.

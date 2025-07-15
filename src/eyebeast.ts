@@ -15,7 +15,7 @@ export type EyebeastSnapshot = {
     bannerUrl: string,
     tags: Array<string>,
     wfe: string,
-    officers: Array<RegionalOfficer>,
+    officers: Record<string, RegionalOfficer>,
 };
 
 export const DEFAULT_SNAPSHOT: EyebeastSnapshot = {
@@ -24,7 +24,7 @@ export const DEFAULT_SNAPSHOT: EyebeastSnapshot = {
     bannerUrl: "r1",
     tags: Array<string>(),
     wfe: "n/a.",
-    officers: Array<RegionalOfficer>(),
+    officers: {},
 };
 
 export function loadSnapshot(): EyebeastSnapshot {
@@ -101,7 +101,7 @@ export async function saveEyebeastSnapshot() {
             }
         });
 
-        snapshot.officers.push(ro);
+        snapshot.officers[ro.nation] = ro;
         roResult = roRegex.exec(activeROSElement.innerText);
     }
 

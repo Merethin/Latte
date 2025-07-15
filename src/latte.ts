@@ -7,6 +7,7 @@ import { getConfigValue, readConfigRecord, readConfigValue, saveConfigRecord } f
 import { keybinds, loadKeybind } from './keybinds';
 import { checkPage, checkPageRegex } from './lib';
 import { injectUserAgentWarning } from './htmllib';
+import { detagSwitch, tagSwitch } from './switch';
 import { saveEyebeastSnapshot } from './eyebeast';
 import { setupMainPage } from './pages/main';
 import { setupSettingsPage } from './pages/settings';
@@ -265,6 +266,16 @@ const AUTHOR = "Merethin";
             if(!lastRegionSeen) return;
 
             window.open(`https://eyebeast.calref.ca/?region=${lastRegionSeen}`, '_blank');
+        });
+
+        Mousetrap.bind(loadKeybind(keybinds.switch), (_) => {
+            if(script.isHtmlRequestInProgress) return;
+
+            let detagMode = getConfigValue<boolean>("detagMode", false);
+            if(detagMode)
+                detagSwitch(script);
+            else
+                tagSwitch(script);
         });
     }
 })();

@@ -22,7 +22,7 @@ export const tagPageHTML = `
 <fieldset>
 <legend>Status</legend>
 <div class="frdata">
-<p>Press your "Tag Key" repeatedly or the button below to tag the selected regions.</p>
+<p>Press your "Tag/Detag Key" repeatedly or the button below to tag the selected regions.</p>
 </div>
 <p id="lt-status-tag">Status: Waiting to start</p>
 <button id="lt-btn-tag" type="submit" class="button primary">Login to First Nation</button>
